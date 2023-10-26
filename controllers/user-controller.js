@@ -2,12 +2,11 @@ import { login, register } from "../services/user-service.js";
 
 export const registerController = async (req, res, next) => {
   try {
-    const result = await register(req.body);
+    const request = req.body;
 
-    res.status(200).json({
-      id: result.id,
-      email: result.email,
-    });
+    const result = await register(request);
+
+    res.status(201).json(result);
   } catch (e) {
     next(e);
   }
@@ -15,11 +14,11 @@ export const registerController = async (req, res, next) => {
 
 export const loginController = async (req, res, next) => {
   try {
-    const result = await login(req.body);
+    const request = req.body;
 
-    res.status(200).json({
-      access_token: result.access_token,
-    });
+    const result = await login(request);
+
+    res.status(200).json(result);
   } catch (e) {
     next(e);
   }

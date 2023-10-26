@@ -10,4 +10,5 @@ export const reflectionValidation = z.object({
   take_away: z.string({ required_error: "take away is required" }).max(500, {
     message: "Take away should not be longer than 500 characters",
   }),
+  reflectionId: z.string().optional(),
 });

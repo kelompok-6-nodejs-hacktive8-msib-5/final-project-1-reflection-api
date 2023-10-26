@@ -17,13 +17,13 @@ export const register = async (request) => {
   const { rows: existingUsers } = await pool.query(checkQueryEmail, [email]);
 
   if (existingUsers.length > 0) {
-    throw new ResponseError(400, "Email already exist");
+    throw new ResponseError(400, "Email already used!");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const insertQueryUsers =
-    "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id";
+    "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email";
   const { rows: insertedUser } = await pool.query(insertQueryUsers, [
     email,
     hashedPassword,
@@ -32,7 +32,7 @@ export const register = async (request) => {
   if (insertedUser.length > 0) {
     return {
       id: insertedUser[0].id,
-      email,
+      email: insertedUser[0].email,
     };
   } else {
     throw new ResponseError(500, "Failed to insert user");
@@ -44,8 +44,8 @@ export const login = async (request) => {
 
   const { email, password } = loginRequest.data;
 
-  const queryText = "SELECT id, email, password FROM users WHERE email = $1";
-  const { rows: users } = await pool.query(queryText, [email]);
+  const insertQuery = "SELECT id, email, password FROM users WHERE email = $1";
+  const { rows: users } = await pool.query(insertQuery, [email]);
 
   if (users.length === 0) {
     throw new ResponseError(401, "Email or password invalid!");

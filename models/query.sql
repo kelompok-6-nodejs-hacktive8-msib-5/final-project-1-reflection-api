@@ -11,7 +11,7 @@ CREATE TABLE
         success TEXT NOT NULL,
         low_point TEXT NOT NULL,
         take_away TEXT NOT NULL,
-        created_at TIMESTAMPTZ DEFAULT NOW(),
-        updated_at TIMESTAMPTZ DEFAULT NOW(),
+        createdAt TIMESTAMPTZ DEFAULT NOW(),
+        updatedAt TIMESTAMPTZ DEFAULT NOW(),
         user_id INT REFERENCES users(id)
     );

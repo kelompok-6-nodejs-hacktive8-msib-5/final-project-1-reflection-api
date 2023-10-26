@@ -9,7 +9,7 @@ export const authMiddleware = (req, res, next) => {
 
   const [type, token] = header.split(" ");
 
-  if (type !== "Bearer" || !token) {
+  if ((type !== "Bearer" && type !== "bearer") || !token) {
     return res.status(401).json({ errors: "Unauthorized" }).end();
   }
 
