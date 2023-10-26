@@ -124,8 +124,9 @@ export const updateReflection = async (user, request) => {
         success: rows[0].success,
         low_point: rows[0].low_point,
         take_away: rows[0].take_away,
-        createdAt: rows[0].createdAt,
-        updatedAt: rows[0].updatedAt,
+        UserId: rows[0].user_id,
+        createdAt: rows[0].createdat,
+        updatedAt: rows[0].updatedat,
       };
     } else {
       throw new ResponseError(404, "Reflection not found");
